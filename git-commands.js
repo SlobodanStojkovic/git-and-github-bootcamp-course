@@ -75,6 +75,13 @@ cat .git/HEAD - view where Head points
 ==========
 GIT CONFIG file is for local per-repo settings configuration. We can configure name, email, colors and lots of other stuff. For more information about it visit https://git-scm.com/docs/git-config
 
+GLOBAL GIT CONFIG - Git looks for the golab config file at either ~/.gitconfig or ~/.config/git/config and any configuration variables that we change in the file will be applied across all Git repos. We can also alter configuration variables from the command line if preferred.
+
+ALIASES - we can easily set up Git aliases to make our Git experience a bit simpler and faster. For example, we could define an alias "git ci" instead of having to type "git commit". We could define a gustom git lg command that prints out a custom formatted commit log. In the CONFIG file we put [alias] then new line, tab and write: s = status, so now instead of git status we can use git s. To set up aliases from the command line we can use:
+git config --global alias.s status
+git config --global alias.cm commit -m
+For examples of aliases we can visit https://github.com/GitAlias/gitalias
+
 REFS Folder - inside of refs we can find a heads directory. Refs/heads contains one file per branch in a repository. Each file is named after a branch and contains the hash of the commit at the tip of the branch. For example refs/heads/master contains the commit hash of the last commit on the master branch. Refs also contains a refs/tags folder which contains one file for each tag in the repo.
 
 HEAD is just a text file that keeps track of where HEAD points. If it contains refs/heads/master, this means that HEAD is pointing to the master branch. In detached HEAD, the HEAD file contains a commit hash instead of a branch reference.
