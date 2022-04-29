@@ -103,4 +103,26 @@ TREES - are Git objects used to store the contents of a directory. Each tree con
 git cat-file -p main^{tree} - this syntax specifies the tree object that is pointed to by the tip of our main (or master) branch.
 
 COMMITS OBJECTS combine a tree object along with information about the context that led to the current tree. Commits store a reference to parent commit(s), the author, the commiter and commit message. Wehn we run git commit, Git creates a new commit object whose parent is the current HEAD commit and whose tree is the current content of the index. Every commit includes a reference to the parent, unless its the first commit and then the tree that will contain a lot of references to other trees and to blobs. Blob contain file content. Everything gets hashed. If a single character is changed, that blob hash is changed. 
+
+=============
+REFLOGS - Git keeps a record of when the tips of branches and other references were updated in the repo. We can view and update these reference logs using the git reflog command. REFLOG = Reference Log. Git only keeps reflogs on our local activity. They are not shared with collaborators. Reflogs expire - git cleans out old entries after around 90 days - this can be configured. The git reflog command accepts subcommands show, expire, delete and exists. Show is the only commonly used variant, and it is the default subcommand.
+git reflog show - will show the log of a specific reference (it defaults to HEAD). 
+git reflog show main - to view the logs for the tip of the main branch
+
+git checkout HEAD@{2} - checkout to HEAD 2 MOVES AGO, it can be just git checkouts, they are counted as move in reflog, its different than git checkout HEAD~2 which returns us two commits ago
+
+Reflog References - we can access specific git refs name@{qualifier}. We can use this syntax to access specific ref pointers and can pass them to other commands including checkout, reset, and merge.
+Timed References - every entry in the reference logs has a timestamp associated with it. We can filter reflogs entries by time/date by using time qualifiers like:
+1.day.ago
+3.minutes.ago
+yesterday
+Fri, 29 Apr 2022 17:52:37 -0800
+git reflog master@{one.week.ago}
+git checkout bugfix@{2.days.ago}
+git diff main@{0} main@{yesterday}
+
+REFLOGS RESCUE - We can sometimes use reflog entries to access commits that seem lost and are not appearing in git log. If we make a commit, then do a git reset --hard and delete that or some other commits, but then realize that we want to return to them we can find their hashes by running:
+git reflog show master
+then we can run command 
+git reset --hard <commit-hash> and it will put HEAD at that commit hash, commits that were gone will be returned
 */
